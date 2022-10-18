@@ -10,11 +10,13 @@ public class Main {
                           2018,"Южная Корея");
         Car hyundai = new Car("Hyundai", "Avante", 1.6, "оранжевый", 2016,
                               "Южная Корея");
+        Car land = new Car("Land Rover", null, 5.0, null , 0, null);
 
         lada.info();
         audi.info();
         bmv.info();
         kia.info();
         hyundai.info();
+        land.info();
     }
 }
