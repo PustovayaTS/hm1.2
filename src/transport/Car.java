@@ -1,21 +1,95 @@
 package transport;
 
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Car {
-    private String brand;
-    private String model;
-    public double engineVolume;
-    public String color;
-    private int productionYear;
-    private String productionCountry;
-    public String transmission;
-    private String bodyType;
-    public String registrationNumber;
-    private int numberOfSeats;
-    public int winterTires;
+    private final String brand;
+    private final String model;
+    private double engineVolume;
+    private String color;
+    private final int productionYear;
+    private final String productionCountry;
+    private String transmission;
+    private final String bodyType;
+    private String registrationNumber;
+    private final int numberOfSeats;
+    private int winterTires;
+    private Key key;
+    private Insurance insurance;
 
+
+    public static class Key {
+        private final String remoteEngineStart;
+        private final String keylessAccess;
+
+    public Key (String remoteEngineStart, String keylessAccess) {
+        if (remoteEngineStart == null || remoteEngineStart.isEmpty()) {
+            this.remoteEngineStart = "default";
+        } else {
+            this.remoteEngineStart = remoteEngineStart;
+        }
+        if (keylessAccess == null || keylessAccess.isEmpty()) {
+            this.keylessAccess = "default";
+        } else {
+            this.keylessAccess = keylessAccess;
+        }
+    }
+
+        public String getRemoteEngineStart() {
+            return remoteEngineStart;
+        }
+
+        public String getKeylessAccess() {
+            return keylessAccess;
+        }
+    }
+
+    public static class Insurance {
+        private final LocalDate validityPeriod;
+        private final double cost;
+        private final String number;
+
+        public Insurance(LocalDate validityPeriod, double cost, String number) {
+            if (validityPeriod == null) {
+                this.validityPeriod = LocalDate.now().plusDays(365);
+            } else {
+                this.validityPeriod = validityPeriod;
+            }
+            this.cost = cost;
+            if (number == null) {
+                this.number = "123456789";
+            } else {
+                this.number = number;
+            }
+        }
+
+        public LocalDate getValidityPeriod() {
+            return validityPeriod;
+        }
+
+        public double getCost() {
+            return cost;
+        }
+
+        public String getNumber() {
+            return number;
+        }
+
+        public void checkTheDeadline() {
+            if (validityPeriod.isBefore(LocalDate.now()) || validityPeriod.isEqual(LocalDate.now())) {
+                System.out.println("Срочно нужно оформлять новую страховку");
+            }
+        }
+
+        public void checkTheNumber() {
+            if (number.length() != 9) {
+                System.out.println("Номер страховки некорректный!");
+            }
+        }
+    }
     public Car
             ( String brand
             , String model
@@ -28,6 +102,8 @@ public class Car {
             , String registrationNumber
             , int numberOfSeats
             , int winterTires
+            , Key key
+            , Insurance insurance
             ) {
         if (brand == null) {
             this.brand = "default";
@@ -79,11 +155,10 @@ public class Car {
         } else {
             this.numberOfSeats = numberOfSeats;
         }
-        if (winterTires > 1 || winterTires < 0) {
-            this.winterTires = 0;
-        } else {
-            this.winterTires = winterTires;
-        }
+        setTypeOfRubber(winterTires);
+        this.key = new Key(key.remoteEngineStart, key.keylessAccess);
+        this.insurance = new Insurance(insurance.validityPeriod, insurance.cost, insurance.number);
+
     }
 
     public void info() {
@@ -110,6 +185,16 @@ public class Car {
                 + numberOfSeats
                 + ", резина - "
                 + this.getTypeOfRubber()
+                + ", удаленный запуск двигателя - "
+                + this.key.getRemoteEngineStart()
+                + ", безключевой доступ - "
+                + this.key.keylessAccess
+                + ". Срок действия страховки - "
+                + this.insurance.validityPeriod
+                + ". Стоимость страховки - "
+                + this.insurance.cost
+                + ". Номер страховки: "
+                + this.insurance.number
                 );
     }
 
@@ -182,6 +267,12 @@ public class Car {
     }
 
     public void setTypeOfRubber(int winterTires) {
-        this.winterTires = winterTires;
+        if (winterTires > 1 || winterTires < 0) {
+            this.winterTires = 0;
+        } else {
+            this.winterTires = winterTires;
+        }
     }
+
+
 }
