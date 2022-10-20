@@ -226,5 +226,9 @@ public class Car extends Transport1 {
         }
     }
 
+    public void refill() {
+        System.out.println("Можно заправлять бензином, дизелем на заправке или заряжать на специальных электропарковках, если это электрокар.");
+    }
+
 
 }

@@ -26,25 +26,36 @@ public class Main {
                               "Южная Корея", "механическая", "седан", "т554тт154", 4, 0, keyHyundai, insuranceHyundai, 100);
 
         lada.info();
+        lada.refill();
         audi.info();
+        audi.refill();
         bmv.info();
+        bmv.refill();
         kia.info();
+        kia.refill();
         hyundai.info();
+        hyundai.refill();
 
 
         Train lastochka = new Train("Ласточка", "B-901", null, 2011, "Россия", 301, 3500, "", "Белорусский вокзал", "Минск-Пассажирский", 11);
         Train leningrad = new Train("Ленинград", "D-125", null, 2019, "Россия", 270, 1700, "", "Ленинградский вокзал", "Ленинград-Пассажирский", 8);
 
         lastochka.trainInfo();
+        lastochka.refill();
         leningrad.trainInfo();
+        leningrad.refill();
 
         Bus gaz = new Bus("ГАЗель", "NEXT A65R25-60", 2022, "Россия", "белый", 90);
         Bus mers = new Bus("Mercedes-Benz", "Sprinter Classic", 2014, "Германия", "черный", 70);
         Bus paz = new Bus("ПАЗ", "32054", 2015, "Россия", "синий", 90);
 
         gaz.busInfo();
+        gaz.refill();
         mers.busInfo();
+        mers.refill();
         paz.busInfo();
+        paz.refill();
+
 
 
     }

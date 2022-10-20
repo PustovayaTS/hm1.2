@@ -24,4 +24,7 @@ public class Bus extends Transport1{
 
         );
     }
+    public void refill() {
+        System.out.println("Можно заправлять бензином или дизелем на заправке.");
+    }
 }

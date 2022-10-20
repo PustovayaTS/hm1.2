@@ -101,6 +101,10 @@ public class Train extends Transport1{
                 + " вагонов."
                 );
         }
+
+    public void refill() {
+        System.out.println("Нужно заправлять дизелем.");
+    }
     }
 
 
