@@ -1,17 +1,13 @@
 package transport;
 
+import com.sun.jdi.connect.Transport;
+
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Car {
-    private final String brand;
-    private final String model;
+public class Car extends Transport1 {
     private double engineVolume;
-    private String color;
-    private final int productionYear;
-    private final String productionCountry;
     private String transmission;
     private final String bodyType;
     private String registrationNumber;
@@ -25,18 +21,18 @@ public class Car {
         private final String remoteEngineStart;
         private final String keylessAccess;
 
-    public Key (String remoteEngineStart, String keylessAccess) {
-        if (remoteEngineStart == null || remoteEngineStart.isEmpty()) {
-            this.remoteEngineStart = "default";
-        } else {
-            this.remoteEngineStart = remoteEngineStart;
+        public Key(String remoteEngineStart, String keylessAccess) {
+            if (remoteEngineStart == null || remoteEngineStart.isEmpty()) {
+                this.remoteEngineStart = "default";
+            } else {
+                this.remoteEngineStart = remoteEngineStart;
+            }
+            if (keylessAccess == null || keylessAccess.isEmpty()) {
+                this.keylessAccess = "default";
+            } else {
+                this.keylessAccess = keylessAccess;
+            }
         }
-        if (keylessAccess == null || keylessAccess.isEmpty()) {
-            this.keylessAccess = "default";
-        } else {
-            this.keylessAccess = keylessAccess;
-        }
-    }
 
         public String getRemoteEngineStart() {
             return remoteEngineStart;
@@ -90,8 +86,9 @@ public class Car {
             }
         }
     }
+
     public Car
-            ( String brand
+             (String brand
             , String model
             , double engineVolume
             , String color
@@ -104,36 +101,13 @@ public class Car {
             , int winterTires
             , Key key
             , Insurance insurance
+            , int maxTravelSpeed
             ) {
-        if (brand == null) {
-            this.brand = "default";
-        } else {
-            this.brand = brand;
-        }
-        if (model == null) {
-            this.model = "default";
-        } else {
-            this.model = model;
-        }
+        super(brand, model, productionYear, productionCountry, color, maxTravelSpeed);
         if (engineVolume == 0) {
             this.engineVolume = 1.5;
         } else {
             this.engineVolume = engineVolume;
-        }
-        if (color == null) {
-            this.color = "белый";
-        } else {
-            this.color = color;
-        }
-        if (productionYear == 0) {
-            this.productionYear = 2000;
-        } else {
-            this.productionYear = productionYear;
-        }
-        if (productionCountry == null) {
-            this.productionCountry = "default";
-        } else {
-            this.productionCountry = productionCountry;
         }
         if (transmission == null || transmission.isEmpty()) {
             this.transmission = "default";
@@ -164,15 +138,15 @@ public class Car {
     public void info() {
         System.out.println
                 (
-                brand
+                getBrand()
                 + " "
-                + model
+                + getModel()
                 + " "
-                + productionYear
+                + getProductionYear()
                 + " год выпуска, сборка "
-                + productionCountry
+                + getProductionCountry()
                 + ", "
-                + color
+                + getBodyColor()
                 + " цвет, объем двигателя — "
                 + engineVolume
                 + " л, коробка передач - "
@@ -188,33 +162,19 @@ public class Car {
                 + ", удаленный запуск двигателя - "
                 + this.key.getRemoteEngineStart()
                 + ", безключевой доступ - "
-                + this.key.keylessAccess
+                + this.key.getKeylessAccess()
                 + ". Срок действия страховки - "
                 + this.insurance.validityPeriod
                 + ". Стоимость страховки - "
                 + this.insurance.cost
                 + ". Номер страховки: "
                 + this.insurance.number
+                + ". Максимальная скорость передвижения - "
+                + this.getMaxTravelSpeed()
                 );
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getProductionYear() {
-        return productionYear;
-    }
-
-    public String getProductionCountry() {
-        return productionCountry;
-    }
-
-    public String getBodyType() {
+   public String getBodyType() {
         return bodyType;
     }
 
@@ -228,14 +188,6 @@ public class Car {
 
     public void setEngineVolume(double engineVolume) {
         this.engineVolume = engineVolume;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public String getTransmission() {
@@ -262,7 +214,7 @@ public class Car {
         if (winterTires == 1) {
             return "зимняя";
         } else {
-            return  "летняя";
+            return "летняя";
         }
     }
 
